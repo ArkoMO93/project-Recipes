@@ -14,6 +14,7 @@ project-Recipes/
 
 - Node.js (v18 or higher)
 - npm (v9 or higher)
+- Docker and Docker Compose (for containerized deployment)
 
 ## Getting Started
 
@@ -73,6 +74,91 @@ npm run start:dev
 
 The backend API will be available at [http://localhost:3001](http://localhost:3001)
 
+## Docker Deployment
+
+### Prerequisites
+- Docker Desktop (or Docker Engine + Docker Compose)
+- Docker version 20.10 or higher
+
+### Development with Docker
+
+Run both frontend and backend in Docker containers for development:
+
+```bash
+# Build and start containers
+docker-compose up --build
+
+# Or run in detached mode (background)
+docker-compose up -d --build
+
+# View logs
+docker-compose logs -f
+
+# Stop containers
+docker-compose down
+```
+
+This will start:
+- **Frontend** at [http://localhost:3000](http://localhost:3000)
+- **Backend** at [http://localhost:3001](http://localhost:3001)
+
+### Production with Docker
+
+Build and run production containers:
+
+```bash
+# Build and start production containers
+docker-compose -f docker-compose.prod.yml up --build
+
+# Or run in detached mode
+docker-compose -f docker-compose.prod.yml up -d --build
+
+# Stop production containers
+docker-compose -f docker-compose.prod.yml down
+```
+
+### Docker Commands
+
+```bash
+# Build individual services
+docker-compose build frontend
+docker-compose build backend
+
+# Start specific service
+docker-compose up frontend
+docker-compose up backend
+
+# View running containers
+docker-compose ps
+
+# Execute commands in containers
+docker-compose exec frontend npm run lint
+docker-compose exec backend npm run test
+
+# Rebuild without cache
+docker-compose build --no-cache
+
+# Remove containers and volumes
+docker-compose down -v
+```
+
+### Dockerfile Details
+
+- **Frontend**: Multi-stage build with Next.js standalone output
+  - Development: `frontend/Dockerfile.dev` - Hot reload enabled
+  - Production: `frontend/Dockerfile` - Optimized build
+  
+- **Backend**: Multi-stage build for NestJS
+  - Development: `backend/Dockerfile.dev` - Watch mode enabled
+  - Production: `backend/Dockerfile` - Optimized build
+
+### Volume Mounts (Development)
+
+In development mode, volumes are mounted for hot reload:
+- Source code is mounted for live updates
+- `node_modules` are excluded from mounts for performance
+- Build artifacts (`.next`, `dist`) are excluded
+
 ## Root-Level Commands
 
 All commands can be run from the root directory:
@@ -102,6 +188,18 @@ npm run lint:frontend    # Run linter for frontend only
 npm run lint:backend    # Run linter for backend only
 npm run test             # Run backend tests
 npm run test:e2e         # Run backend end-to-end tests
+```
+
+### Docker
+```bash
+npm run docker:dev           # Start development containers
+npm run docker:dev:detached  # Start development containers in background
+npm run docker:dev:down      # Stop development containers
+npm run docker:prod          # Start production containers
+npm run docker:prod:detached # Start production containers in background
+npm run docker:prod:down     # Stop production containers
+npm run docker:logs         # View container logs
+npm run docker:clean        # Stop containers and remove volumes
 ```
 
 ## Webpack Configuration
@@ -185,6 +283,13 @@ DATABASE_URL=
 ```
 
 **Note:** The backend runs on port 3001 by default to avoid conflicts with the frontend (port 3000).
+
+### Docker Environment Variables
+
+When using Docker, environment variables can be set in:
+- `docker-compose.yml` (development)
+- `docker-compose.prod.yml` (production)
+- `.env` file (loaded automatically by docker-compose)
 
 ## License
 
