@@ -1,0 +1,4 @@
+model Recipe {
+  id    Int     @default(autoincrement()) @id
+  description  String?
+}

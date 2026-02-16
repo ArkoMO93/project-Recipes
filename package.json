@@ -5,22 +5,22 @@
 	"private": true,
 	"scripts": {
 		"dev:all": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\" --names \"FRONTEND,BACKEND\" --prefix-colors \"cyan,magenta\"",
-		"dev:frontend": "cd frontend && npm run dev",
-		"dev:backend": "cd backend && npm run start:dev",
+		"dev:frontend": "(cd frontend && npm run dev)",
+		"dev:backend": "(cd backend && npm run start:dev)",
 		"build:all": "npm run build:frontend && npm run build:backend",
-		"build:frontend": "cd frontend && npm run build",
-		"build:backend": "cd backend && npm run build",
+		"build:frontend": "(cd frontend && npm run build)",
+		"build:backend": "(cd backend && npm run build)",
 		"start:all": "concurrently \"npm run start:frontend\" \"npm run start:backend\" --names \"FRONTEND,BACKEND\" --prefix-colors \"cyan,magenta\"",
-		"start:frontend": "cd frontend && npm run start",
-		"start:backend": "cd backend && npm run start:prod",
+		"start:frontend": "(cd frontend && npm run start)",
+		"start:backend": "(cd backend && npm run start:prod)",
 		"install:all": "npm install && cd frontend && npm install && cd ../backend && npm install",
 		"lint:all": "npm run lint:frontend && npm run lint:backend",
-		"lint:frontend": "cd frontend && npm run lint",
-		"lint:backend": "cd backend && npm run lint",
+		"lint:frontend": "(cd frontend && npm run lint)",
+		"lint:backend": "(cd backend && npm run lint)",
 		"test:all": "concurrently \"npm run test:frontend\" \"npm run test:backend\" --names \"FRONTEND_TEST,BACKEND_TEST\" --prefix-colors \"cyan,magenta\"",
-		"test:frontend": "cd frontend && npm run test",
-		"test:backend": "cd backend && npm run test",
-		"test:e2e": "cd backend && npm run test:e2e",
+		"test:frontend": "(cd frontend && npm run tes)",
+		"test:backend": "(cd backend && npm run test)",
+		"test:e2e": "(cd backend && npm run test:e2e)",
 		"docker:dev": "docker-compose up --build",
 		"docker:dev:detached": "docker-compose up -d --build",
 		"docker:dev:down": "docker-compose down",
@@ -28,7 +28,10 @@
 		"docker:prod:detached": "docker-compose -f docker-compose.prod.yml up -d --build",
 		"docker:prod:down": "docker-compose -f docker-compose.prod.yml down",
 		"docker:logs": "docker-compose logs -f",
-		"docker:clean": "docker-compose down -v"
+		"docker:clean": "docker-compose down -v",
+		"prisma:generate": "npx prisma generate --schema ./backend/prisma",
+		"prisma:migrate": "(cd backend && npx prisma migrate dev)",
+		"prisma:studio": "(cd backend && npx prisma studio)"
 	},
 	"devDependencies": {
 		"concurrently": "^9.1.0"
@@ -36,5 +39,8 @@
 	"engines": {
 		"node": ">=18.0.0",
 		"npm": ">=9.0.0"
+	},
+	"prisma": {
+		"schema": "./prisma"
 	}
 }

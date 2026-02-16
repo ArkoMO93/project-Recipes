@@ -73,3 +73,6 @@ next-env.d.ts
 
 # Debug
 .vscode-test/
+
+# Prisma
+shared/prisma/
