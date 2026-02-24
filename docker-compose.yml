@@ -28,6 +28,7 @@ services:
     environment:
       - NODE_ENV=development
       - NEXT_PUBLIC_API_URL=http://localhost:3001
+      - API_URL=http://backend:3001
     networks:
       - app-network
     restart: unless-stopped
