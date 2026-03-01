@@ -1,4 +1,10 @@
 model Recipe {
-  id    Int     @default(autoincrement()) @id
-  description  String?
+  id                Int                @id @default(autoincrement())
+  description       String?
+  recipeIngredients RecipeIngredient[]
+  video             String?
+  image             String?
+  steps             Step[]
+  createdAt         DateTime           @default(now())
+  updatedAt         DateTime           @default(now()) @updatedAt
 }
