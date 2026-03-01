@@ -31,10 +31,14 @@
 		"docker:clean": "docker-compose down -v",
 		"prisma:generate": "npx prisma generate --schema ./backend/prisma",
 		"prisma:migrate": "(cd backend && npx prisma migrate dev)",
-		"prisma:studio": "(cd backend && npx prisma studio)"
+		"prisma:studio": "(cd backend && npx prisma studio)",
+		"openapi:generate": "(cd backend && npm run openapi:generate)",
+		"frontend:types:generate": "openapi-typescript ./backend/openapi.json -o ./frontend/types/api.ts",
+		"contracts:generate": "npm run openapi:generate && npm run frontend:types:generate"
 	},
 	"devDependencies": {
-		"concurrently": "^9.1.0"
+		"concurrently": "^9.1.0",
+		"openapi-typescript": "^7.13.0"
 	},
 	"engines": {
 		"node": ">=18.0.0",

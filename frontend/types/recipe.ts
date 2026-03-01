@@ -1,4 +1,3 @@
-export interface Recipe {
-  id: number;
-  description: string | null;
-}
+import type { components } from "./api";
+
+export type Recipe = components["schemas"]["RecipeResponseDto"];

@@ -1,0 +1,111 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "App"
+        ]
+      }
+    },
+    "/recipes": {
+      "get": {
+        "operationId": "RecipesController_getAll",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/RecipeResponseDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "recipes"
+        ]
+      },
+      "post": {
+        "operationId": "RecipesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateRecipeDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RecipeResponseDto"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "recipes"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Project Recipes API",
+    "description": "API for recipes and future meal planning features.",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "RecipeResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "example": 1
+          },
+          "description": {
+            "type": "string",
+            "example": "Classic Margherita pizza with fresh basil and mozzarella.",
+            "nullable": true
+          }
+        },
+        "required": [
+          "id",
+          "description"
+        ]
+      },
+      "CreateRecipeDto": {
+        "type": "object",
+        "properties": {
+          "description": {
+            "type": "string",
+            "example": "Classic Margherita pizza with fresh basil and mozzarella."
+          }
+        }
+      }
+    }
+  }
+}

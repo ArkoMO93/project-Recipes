@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Recipe } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
+import { CreateRecipeDto } from './dto/create-recipe.dto';
 
 @Injectable()
 export class RecipesService {
@@ -10,11 +11,7 @@ export class RecipesService {
     return await this.prisma.recipe.findMany();
   }
 
-  async create(data: {
-    description: string;
-    steps?: string[];
-    ingredients?: string[];
-  }): Promise<Recipe> {
+  async create(data: CreateRecipeDto): Promise<Recipe> {
     // #TODO: Add steps and ingredients
     return await this.prisma.recipe.create({
       data: {
@@ -22,6 +19,7 @@ export class RecipesService {
         steps: {
           create: {
             description: 'Step 1',
+            order: 1,
           },
         },
         recipeIngredients: {
